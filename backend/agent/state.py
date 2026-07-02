@@ -28,6 +28,7 @@ class PlanStep:
     args: dict
     status: str = "pending"
     output: Optional[str] = None
+    start_time: Optional[datetime] = None
     started_at: Optional[datetime] = None
 
 

@@ -1,6 +1,7 @@
 import asyncio
 import re
 import time
+from datetime import datetime
 
 from backend.agent.state import AgentState, AgentPhase, PlanStep
 from backend.agent.context import build_context
@@ -101,6 +102,7 @@ async def run_agent(state: AgentState):
                 total_steps=len(state.plan),
                 step_title=step.title,
             )
+            step.start_time = datetime.utcnow()
             step.status = "running"
             output = await execute_step(step, state, emit)
             step.status = "done"
