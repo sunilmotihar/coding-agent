@@ -1,0 +1,19 @@
+services:
+  coder-db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: coder
+      POSTGRES_PASSWORD: coder
+      POSTGRES_DB: coder
+    ports:
+      - "5432:5432"
+    volumes:
+      - coder_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U coder"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  coder_db:
