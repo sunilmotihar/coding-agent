@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { useAgentStore } from '../store/agentStore'
+import { useElapsedTime } from '../hooks/useElapsedTime'
 
 const PHASE_LABELS = {
   IDLE: 'Starting…',
@@ -27,6 +28,8 @@ export function KanbanCard({ card }) {
   const isActive = card.id === activeCardId
   const livePhase = isActive ? phase : null
   const repoName = card.repoUrl.replace('https://github.com/', '')
+  
+  const elapsed = useElapsedTime(card.column === 'working' ? card.startedAt : null)
 
   const handleStart = async () => {
     setLoading(true)
@@ -102,6 +105,7 @@ export function KanbanCard({ card }) {
         <div className="phase-badge">
           <span className="dot" />
           {(isActive && PHASE_LABELS[livePhase]) || 'Agent working…'}
+          {elapsed && <span className="elapsed-time"> · {elapsed}</span>}
         </div>
       )}
 

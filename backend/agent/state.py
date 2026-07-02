@@ -1,6 +1,7 @@
 from enum import Enum
 from dataclasses import dataclass, field
 from typing import Optional, List
+from datetime import datetime
 import uuid
 
 
@@ -27,6 +28,7 @@ class PlanStep:
     args: dict
     status: str = "pending"
     output: Optional[str] = None
+    started_at: Optional[datetime] = None
 
 
 @dataclass

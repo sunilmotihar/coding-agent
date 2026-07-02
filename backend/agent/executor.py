@@ -1,4 +1,5 @@
 import anthropic
+from datetime import datetime
 
 from backend.config import settings
 from backend.agent.state import AgentState, PlanStep
@@ -18,6 +19,9 @@ async def execute_step(step: PlanStep, state: AgentState, emit) -> str:
     Streams tool_call / tool_result events to the WebSocket as it works.
     Returns a text summary of what was done.
     """
+    # Record timestamp when step execution begins
+    step.started_at = datetime.utcnow()
+    
     client = anthropic.AsyncAnthropic(api_key=settings.anthropic_api_key)
 
     messages = [
